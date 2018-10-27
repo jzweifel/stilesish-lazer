@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import RotatingFace from "./components/RotatingFace";
+import FaceContainer from "./components/FaceContainer";
 
 const AppDiv = styled.div`
   text-align: center;
@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <AppDiv>
-        <RotatingFace />
+        <FaceContainer />
       </AppDiv>
     );
   }
