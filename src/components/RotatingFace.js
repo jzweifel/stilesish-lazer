@@ -1,21 +1,45 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import stiles from "../stiles.png";
 
-const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-`;
-
 const RotatingImage = styled.img`
-  animation: ${spin} infinite 20s linear;
   height: 40vmin;
+  transform: rotate(${props => props.angle || 0}deg);
 `;
 
 class RotatingFace extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+
+    this.getCenter = this.getCenter.bind(this);
+    this.getAngle = this.getAngle.bind(this);
+  }
+
+  getCenter = () => {
+    if (this.myRef.current) {
+      const { offsetLeft, offsetTop, width, height } = this.myRef.current;
+      const center = {
+        x: offsetLeft + width / 2,
+        y: offsetTop + height / 2
+      };
+
+      return center;
+    }
+    return { x: 0, y: 0 };
+  };
+
+  getAngle = () => {
+    const { mouseX, mouseY } = this.props;
+    const { x, y } = this.getCenter();
+    const angle = Math.atan2(mouseY - y, mouseX - x) * (180 / Math.PI);
+    return angle;
+  };
+
   render() {
-    return <RotatingImage src={stiles} alt="logo" />;
+    return (
+      <RotatingImage ref={this.myRef} src={stiles} angle={this.getAngle} />
+    );
   }
 }
 

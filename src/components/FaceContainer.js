@@ -32,10 +32,7 @@ class FaceContainer extends Component {
     const { x, y } = this.state.mouse;
     return (
       <FaceDiv onMouseMove={this.handleMouseMove}>
-        <p>
-          mouse: ({x}, {y})
-        </p>
-        <RotatingFace />
+        <RotatingFace mouseX={x} mouseY={y} />
       </FaceDiv>
     );
   }
